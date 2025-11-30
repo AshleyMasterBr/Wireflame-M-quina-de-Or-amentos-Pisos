@@ -25,16 +25,23 @@
         /* --- HEADER --- */
         header { background: var(--white); padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; width: 100%; top: 0; z-index: 1000; }
         header .flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--secondary); letter-spacing: -1px; text-transform: uppercase; }
+        
+        /* Logo Ajustada */
+        .logo { 
+            display: flex; align-items: center; gap: 10px;
+            font-size: 1.3rem; font-weight: 900; color: var(--secondary); letter-spacing: -1px; text-transform: uppercase; 
+        }
+        .logo img { height: 40px; width: auto; }
         .logo span { color: var(--primary); }
+
         .btn-zap-header { background: var(--accent); color: white; padding: 8px 15px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; }
 
-        /* --- HERO SECTION (Fundo com Imagem) --- */
+        /* --- HERO SECTION --- */
         .hero { 
-            /* Aqui puxa a imagem que você vai colocar na pasta */
+            /* Certifique-se de ter 'fundo.jpg' na pasta */
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('fundo.jpg'); 
             background-size: cover; background-position: center; 
-            min-height: 100vh; /* Ocupa a tela toda */
+            min-height: 100vh;
             display: flex; align-items: center; justify-content: center;
             text-align: center; color: white;
             padding: 100px 0 60px 0;
@@ -43,7 +50,7 @@
         .hero h1 { font-size: 2.2rem; margin-bottom: 10px; text-transform: uppercase; line-height: 1.2; }
         .hero p { font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9; }
 
-        /* --- CALCULADORA (Formulário Disfarçado) --- */
+        /* --- CALCULADORA --- */
         .calculator-box {
             background: white; color: var(--secondary);
             padding: 30px; border-radius: 15px;
@@ -98,20 +105,33 @@
         
         .disclaimer { margin-top: 15px; font-size: 0.75rem; color: #777; }
 
-        /* --- DIFERENCIAIS --- */
+        /* --- DIFERENCIAIS (CORRIGIDO ALINHAMENTO) --- */
         .features { padding: 60px 0; text-align: center; background: #fff; }
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        
         .feature-item i { font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; }
-        .feature-item h3 { margin-bottom: 10px; }
+        /* AQUI ESTÁ A CORREÇÃO DO ALINHAMENTO: Altura mínima para o título */
+        .feature-item h3 { margin-bottom: 10px; min-height: 3em; display: flex; align-items: flex-start; justify-content: center; }
 
-        /* --- FOOTER --- */
-        footer { background: var(--secondary); color: #777; padding: 30px 0; text-align: center; font-size: 0.85rem; }
-        .footer-brand { color: white; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
+        /* --- FOOTER (CORRIGIDO UMA LINHA) --- */
+        footer { background: var(--secondary); color: #777; padding: 25px 0; font-size: 0.85rem; }
+        
+        .footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        
+        .footer-brand { 
+            display: flex; align-items: center; gap: 10px;
+            color: white; font-weight: 700; text-transform: uppercase; 
+        }
+        .footer-brand img { height: 25px; width: auto; opacity: 0.8; }
 
-        /* Responsivo */
+        .footer-text { text-align: right; opacity: 0.8; }
+        
+        /* Mobile Footer */
         @media(max-width: 600px) {
             .hero h1 { font-size: 1.8rem; }
             .total-value { font-size: 2rem; }
+            .footer-row { flex-direction: column; text-align: center; }
+            .footer-text { text-align: center; }
         }
     </style>
 </head>
@@ -119,7 +139,10 @@
 
     <header>
         <div class="container flex">
-            <div class="logo">SUA MARCA<span>AQUI</span></div>
+            <div class="logo">
+                <img src="logo.png" alt="Logo" onerror="this.style.display='none'"> 
+                <div>SUA MARCA<span>AQUI</span></div>
+            </div>
             <a href="#" class="btn-zap-header"><i class="fab fa-whatsapp"></i> Falar com Vendedor</a>
         </div>
     </header>
@@ -176,7 +199,8 @@
 
     <section class="features">
         <div class="container">
-            <h2>Por que escolher a SUA MARCA AQUI?</h2>
+            <h2>Por que escolher a SUA MARCA?</h2>
+            
             <div class="feature-grid">
                 <div class="feature-item">
                     <i class="fas fa-bolt"></i>
@@ -198,10 +222,14 @@
     </section>
 
     <footer>
-        <div class="container">
-            <div class="footer-brand">SUA MARCA AQUI</div>
-            <p>&copy; Todos os direitos reservados.</p>
-            <p style="margin-top: 15px; font-size: 0.75rem; opacity: 0.6;">Desenvolvido por Legado Performance Digital</p>
+        <div class="container footer-row">
+            <div class="footer-brand">
+                <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
+                <div>SUA MARCA AQUI</div>
+            </div>
+            <div class="footer-text">
+                &copy; Todos os direitos reservados. <span style="margin: 0 10px; opacity: 0.3;">|</span> Desenvolvido por Legado Performance Digital
+            </div>
         </div>
     </footer>
 
@@ -244,36 +272,28 @@
 
     <script>
         function calcular() {
-            // Pegar valores
             const metragem = parseFloat(document.getElementById('metragem').value);
             const modeloEl = document.getElementById('modelo');
             const modeloPreco = parseFloat(modeloEl.value);
             const modeloNome = modeloEl.options[modeloEl.selectedIndex].text;
             const temRodape = document.getElementById('rodape').checked;
             
-            // Dados extras (Formulário Disfarçado)
             const pisoAtual = document.getElementById('pisoAtual').value;
             const nivelamento = document.getElementById('nivelamento').value;
 
-            // Validação
             if (isNaN(metragem) || metragem < 1) {
                 alert("Por favor, digite uma metragem válida.");
                 return;
             }
 
-            // Cálculo
             let total = metragem * modeloPreco;
             if (temRodape) {
                 total += (metragem * 25); 
             }
 
-            // Formatar Dinheiro
             const valorFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-            // Atualizar Modal
             document.getElementById('valorFinal').innerText = valorFormatado;
             
-            // Gerar Link do WhatsApp com as informações EXTRAS
             const textoZap = `Olá! Fiz uma simulação no site.\n\n` +
                              `📐 *Metragem:* ${metragem}m²\n` +
                              `🪵 *Modelo:* ${modeloNome.split('(')[0]}\n` +
@@ -283,12 +303,9 @@
                              `- Precisa Nivelar: ${nivelamento}\n\n` +
                              `Gostaria de agendar a visita técnica.`;
             
-            const numeroZap = "5511999999999"; // TROCAR PELO NÚMERO DO CLIENTE
+            const numeroZap = "5511913393797"; 
             const link = `https://wa.me/${numeroZap}?text=${encodeURIComponent(textoZap)}`;
-            
             document.getElementById('linkZap').href = link;
-
-            // Abrir Modal
             document.getElementById('modalResult').style.display = 'flex';
         }
 
