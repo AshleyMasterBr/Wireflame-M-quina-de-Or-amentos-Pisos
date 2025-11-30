@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pisos Premium | Orçamento Automático</title>
+    <title>Orçamento Online | Sua Marca</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -14,10 +14,10 @@
         h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         
-        /* Cores da Marca (Editáveis) */
+        /* Cores da Marca (Genéricas) */
         :root {
-            --primary: #FF6B00; /* Laranja Conversão */
-            --secondary: #1a1a1a; /* Preto Luxo */
+            --primary: #FF6B00; /* Laranja Padrão */
+            --secondary: #1a1a1a;
             --accent: #25D366; /* Verde WhatsApp */
             --white: #ffffff;
         }
@@ -25,35 +25,36 @@
         /* --- HEADER --- */
         header { background: var(--white); padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; width: 100%; top: 0; z-index: 1000; }
         header .flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--secondary); letter-spacing: -1px; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--secondary); letter-spacing: -1px; text-transform: uppercase; }
         .logo span { color: var(--primary); }
         .btn-zap-header { background: var(--accent); color: white; padding: 8px 15px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; }
 
-        /* --- HERO SECTION (A Vitrine) --- */
+        /* --- HERO SECTION (Fundo com Imagem) --- */
         .hero { 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1581858726768-fd8396131b94?q=80&w=2070&auto=format&fit=crop'); 
+            /* Aqui puxa a imagem que você vai colocar na pasta */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('fundo.jpg'); 
             background-size: cover; background-position: center; 
-            height: 100vh; min-height: 600px; 
+            min-height: 100vh; /* Ocupa a tela toda */
             display: flex; align-items: center; justify-content: center;
             text-align: center; color: white;
-            padding-top: 60px; /* Compensar Header */
+            padding: 100px 0 60px 0;
         }
         .hero-content { max-width: 800px; width: 100%; }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; text-transform: uppercase; line-height: 1.2; }
-        .hero p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 10px; text-transform: uppercase; line-height: 1.2; }
+        .hero p { font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9; }
 
-        /* --- CALCULADORA (O Ouro) --- */
+        /* --- CALCULADORA (Formulário Disfarçado) --- */
         .calculator-box {
             background: white; color: var(--secondary);
             padding: 30px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            max-width: 450px; margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            max-width: 480px; margin: 0 auto;
             text-align: left;
         }
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; outline: none; transition: 0.3s; }
-        .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.85rem; color: #555; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95rem; outline: none; transition: 0.3s; background: #f9f9f9; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); background: #fff; }
         
         .btn-calc { 
             width: 100%; background: var(--primary); color: white; 
@@ -62,7 +63,7 @@
         }
         .btn-calc:hover { background: #e65c00; transform: translateY(-2px); }
 
-        /* --- MODAL (O Gatilho) --- */
+        /* --- MODAL (Resultado) --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); z-index: 2000;
@@ -79,13 +80,13 @@
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #999; }
         
         .price-display { background: #f4f4f4; padding: 15px; border-radius: 10px; margin: 20px 0; }
-        .total-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #666; }
+        .total-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #666; font-weight: 700; }
         .total-value { font-size: 2.5rem; font-weight: 900; color: var(--secondary); }
         
         .bonus-list { text-align: left; margin-bottom: 25px; border: 1px dashed #ccc; padding: 15px; border-radius: 8px; }
-        .bonus-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95rem; }
+        .bonus-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
         .bonus-item.free { color: #27ae60; font-weight: 700; }
-        .strike { text-decoration: line-through; color: #e74c3c; margin-right: 5px; font-weight: 400; font-size: 0.85rem; }
+        .strike { text-decoration: line-through; color: #e74c3c; margin-right: 5px; font-weight: 400; font-size: 0.8rem; }
 
         .btn-action { 
             display: block; width: 100%; background: var(--accent); color: white; 
@@ -95,15 +96,17 @@
         }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
         
-        .disclaimer { margin-top: 15px; font-size: 0.8rem; color: #777; }
+        .disclaimer { margin-top: 15px; font-size: 0.75rem; color: #777; }
 
-        /* --- GALERIA & INFO --- */
+        /* --- DIFERENCIAIS --- */
         .features { padding: 60px 0; text-align: center; background: #fff; }
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
         .feature-item i { font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; }
         .feature-item h3 { margin-bottom: 10px; }
 
-        footer { background: var(--secondary); color: #777; padding: 30px 0; text-align: center; font-size: 0.9rem; }
+        /* --- FOOTER --- */
+        footer { background: var(--secondary); color: #777; padding: 30px 0; text-align: center; font-size: 0.85rem; }
+        .footer-brand { color: white; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
 
         /* Responsivo */
         @media(max-width: 600px) {
@@ -116,21 +119,41 @@
 
     <header>
         <div class="container flex">
-            <div class="logo">PISOS<span>PREMIUM</span></div>
-            <a href="#" class="btn-zap-header"><i class="fab fa-whatsapp"></i> (11) 99999-9999</a>
+            <div class="logo">SUA MARCA<span>AQUI</span></div>
+            <a href="#" class="btn-zap-header"><i class="fab fa-whatsapp"></i> Falar com Vendedor</a>
         </div>
     </header>
 
     <section class="hero">
         <div class="container hero-content">
-            <h1>Instalação Profissional em <br> <span style="color: var(--primary);">Jundiaí e Região</span></h1>
-            <p>Faça seu orçamento em 30 segundos e garanta condições exclusivas.</p>
+            <h1>Instalação Profissional em <br> <span style="color: var(--primary);">SUA REGIÃO AQUI</span></h1>
+            <p>Faça seu orçamento em 30 segundos e garanta <strong style="color: #fff;">CONDIÇÕES EXCLUSIVAS</strong>.</p>
             
             <div class="calculator-box">
                 <div class="form-group">
                     <label>Qual a metragem aproximada? (m²)</label>
                     <input type="number" id="metragem" placeholder="Ex: 45">
                 </div>
+                
+                <div class="form-group">
+                    <label>Qual o piso atual do local?</label>
+                    <select id="pisoAtual">
+                        <option value="Contrapiso">Contrapiso (Cimento)</option>
+                        <option value="Cerâmica/Porcelanato">Cerâmica / Porcelanato</option>
+                        <option value="Madeira/Taco">Madeira / Taco</option>
+                        <option value="Outro">Outro / Não sei</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>O piso precisa ser nivelado?</label>
+                    <select id="nivelamento">
+                        <option value="Nao sei">Não sei dizer (Visita necessária)</option>
+                        <option value="Sim">Sim, está irregular</option>
+                        <option value="Não">Não, está retinho</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label>Qual modelo você prefere?</label>
                     <select id="modelo">
@@ -140,10 +163,12 @@
                         <option value="350">Madeira Maciça (R$ 350/m²)</option>
                     </select>
                 </div>
-                <div class="form-group" style="display:flex; align-items:center; gap:10px;">
+
+                <div class="form-group" style="display:flex; align-items:center; gap:10px; margin-top: 5px;">
                     <input type="checkbox" id="rodape" style="width:20px;">
-                    <label for="rodape" style="margin:0;">Incluir Rodapé (+ R$ 25/m linear)</label>
+                    <label for="rodape" style="margin:0;">Incluir Rodapé (+ R$ 25/m)</label>
                 </div>
+
                 <button class="btn-calc" onclick="calcular()">VER PREÇO ESTIMADO</button>
             </div>
         </div>
@@ -151,30 +176,33 @@
 
     <section class="features">
         <div class="container">
-            <h2>Por que escolher a Pisos Premium?</h2>
+            <h2>Por que escolher a SUA MARCA AQUI?</h2>
             <div class="feature-grid">
                 <div class="feature-item">
-                    <i class="fas fa-clock"></i>
-                    <h3>Instalação em 48h</h3>
-                    <p>Equipe rápida e limpa. Entregamos sua obra sem entulho.</p>
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instalação Rápida e sem Burocracia</h3>
+                    <p>Equipe rápida e limpa. Entregamos sua obra sem dor de cabeça.</p>
                 </div>
                 <div class="feature-item">
                     <i class="fas fa-medal"></i>
-                    <h3>Garantia de 1 Ano</h3>
-                    <p>Segurança total na instalação e nos materiais.</p>
+                    <h3>Garantia Total</h3>
+                    <p>Segurança na instalação e nos materiais utilizados.</p>
                 </div>
                 <div class="feature-item">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <h3>Pagamento Facilitado</h3>
-                    <p>Parcelamos sua reforma em até 10x sem juros.</p>
+                    <i class="fas fa-comments-dollar"></i>
+                    <h3>Negociação Direta</h3>
+                    <p>Fale diretamente com quem resolve e pague facilitado.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Pisos Premium - Todos os direitos reservados.</p>
-        <p>Desenvolvido por Pixel Studio</p>
+        <div class="container">
+            <div class="footer-brand">SUA MARCA AQUI</div>
+            <p>&copy; Todos os direitos reservados.</p>
+            <p style="margin-top: 15px; font-size: 0.75rem; opacity: 0.6;">Desenvolvido por Legado Performance Digital</p>
+        </div>
     </footer>
 
     <div class="modal-overlay" id="modalResult">
@@ -189,7 +217,7 @@
             </div>
 
             <div class="bonus-list">
-                <p style="margin-bottom:10px; font-weight:600;">O que está incluso hoje:</p>
+                <p style="margin-bottom:10px; font-weight:600;">Condições Exclusivas Hoje:</p>
                 <div class="bonus-item free">
                     <span><i class="fas fa-check"></i> Cola Especial</span>
                     <span><span class="strike">R$ 300</span> GRÁTIS</span>
@@ -204,12 +232,12 @@
                 </div>
             </div>
 
-            <a href="#" id="linkZap" class="btn-action" target="_blank">
+            <a href="#" id="linkZap" class="btn-action" target="_parent">
                 AGENDAR VISITA TÉCNICA <i class="fab fa-whatsapp"></i>
             </a>
             
             <p class="disclaimer">
-                *Valor estimado. É necessária uma visita técnica gratuita para validar a metragem e o contrapiso.
+                *Valor estimado. É necessária uma visita técnica gratuita para validar o contrapiso e a metragem final.
             </p>
         </div>
     </div>
@@ -218,10 +246,16 @@
         function calcular() {
             // Pegar valores
             const metragem = parseFloat(document.getElementById('metragem').value);
-            const modeloPreco = parseFloat(document.getElementById('modelo').value);
+            const modeloEl = document.getElementById('modelo');
+            const modeloPreco = parseFloat(modeloEl.value);
+            const modeloNome = modeloEl.options[modeloEl.selectedIndex].text;
             const temRodape = document.getElementById('rodape').checked;
             
-            // Validação simples
+            // Dados extras (Formulário Disfarçado)
+            const pisoAtual = document.getElementById('pisoAtual').value;
+            const nivelamento = document.getElementById('nivelamento').value;
+
+            // Validação
             if (isNaN(metragem) || metragem < 1) {
                 alert("Por favor, digite uma metragem válida.");
                 return;
@@ -229,9 +263,6 @@
 
             // Cálculo
             let total = metragem * modeloPreco;
-            
-            // Lógica simples de rodapé (estimando que rodapé é ~ metragem * 0.8 ou um valor fixo pra simplificar)
-            // Aqui vou simplificar: se tem rodapé, adiciona 15% no valor total ou R$ 25 * metragem (assumindo perimetro ~ area em comodos pequenos)
             if (temRodape) {
                 total += (metragem * 25); 
             }
@@ -242,10 +273,17 @@
             // Atualizar Modal
             document.getElementById('valorFinal').innerText = valorFormatado;
             
-            // Gerar Link do WhatsApp
-            const modeloNome = document.getElementById('modelo').options[document.getElementById('modelo').selectedIndex].text;
-            const textoZap = `Olá! Fiz um orçamento no site: ${metragem}m² de ${modeloNome}. Deu aprox. ${valorFormatado}. Gostaria de agendar a visita técnica para validar.`;
-            const numeroZap = "5511913393797"; // TROCAR PELO NÚMERO DO CLIENTE
+            // Gerar Link do WhatsApp com as informações EXTRAS
+            const textoZap = `Olá! Fiz uma simulação no site.\n\n` +
+                             `📐 *Metragem:* ${metragem}m²\n` +
+                             `🪵 *Modelo:* ${modeloNome.split('(')[0]}\n` +
+                             `💰 *Valor Estimado:* ${valorFormatado}\n\n` +
+                             `ℹ️ *Informações do Local:*\n` +
+                             `- Piso Atual: ${pisoAtual}\n` +
+                             `- Precisa Nivelar: ${nivelamento}\n\n` +
+                             `Gostaria de agendar a visita técnica.`;
+            
+            const numeroZap = "5511999999999"; // TROCAR PELO NÚMERO DO CLIENTE
             const link = `https://wa.me/${numeroZap}?text=${encodeURIComponent(textoZap)}`;
             
             document.getElementById('linkZap').href = link;
@@ -258,7 +296,6 @@
             document.getElementById('modalResult').style.display = 'none';
         }
 
-        // Fechar se clicar fora
         window.onclick = function(event) {
             const modal = document.getElementById('modalResult');
             if (event.target == modal) {
