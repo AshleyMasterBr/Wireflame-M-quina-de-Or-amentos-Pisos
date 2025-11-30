@@ -3,214 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pisos Premium | Orçamento Automático</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>App de Orçamento | Pisos Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* --- RESET & BASE --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Open Sans', sans-serif; color: #333; line-height: 1.6; }
-        h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
-        /* Cores da Marca (Editáveis) */
-        :root {
-            --primary: #FF6B00; /* Laranja Conversão */
-            --secondary: #1a1a1a; /* Preto Luxo */
-            --accent: #25D366; /* Verde WhatsApp */
-            --white: #ffffff;
+        body { 
+            background-color: #f3f4f6; 
+            color: #1f2937; 
+            height: 100vh; /* Ocupa toda a altura do celular */
+            display: flex;
+            flex-direction: column;
         }
 
-        /* --- HEADER --- */
-        header { background: var(--white); padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; width: 100%; top: 0; z-index: 1000; }
-        header .flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--secondary); letter-spacing: -1px; }
-        .logo span { color: var(--primary); }
-        .btn-zap-header { background: var(--accent); color: white; padding: 8px 15px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; }
-
-        /* --- HERO SECTION (A Vitrine) --- */
-        .hero { 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1581858726768-fd8396131b94?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover; background-position: center; 
-            height: 100vh; min-height: 600px; 
-            display: flex; align-items: center; justify-content: center;
-            text-align: center; color: white;
-            padding-top: 60px; /* Compensar Header */
+        /* --- HEADER TIPO APP --- */
+        header {
+            background: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+            z-index: 10;
         }
-        .hero-content { max-width: 800px; width: 100%; }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; text-transform: uppercase; line-height: 1.2; }
-        .hero p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9; }
-
-        /* --- CALCULADORA (O Ouro) --- */
-        .calculator-box {
-            background: white; color: var(--secondary);
-            padding: 30px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            max-width: 450px; margin: 0 auto;
-            text-align: left;
+        .menu-icon { font-size: 1.2rem; color: #374151; }
+        .app-logo { font-weight: 800; font-size: 1.1rem; color: #111; letter-spacing: -0.5px; }
+        .app-logo span { color: #f97316; } /* Laranja Marca */
+        .notif-badge { position: relative; }
+        .notif-badge::after {
+            content: ''; position: absolute; top: 0; right: 0; width: 8px; height: 8px;
+            background: #ef4444; border-radius: 50%; border: 1px solid white;
         }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; outline: none; transition: 0.3s; }
-        .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
-        
-        .btn-calc { 
-            width: 100%; background: var(--primary); color: white; 
-            border: none; padding: 15px; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; 
-            border-radius: 8px; cursor: pointer; transition: 0.3s; margin-top: 10px;
-        }
-        .btn-calc:hover { background: #e65c00; transform: translateY(-2px); }
 
-        /* --- MODAL (O Gatilho) --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 2000;
-            display: none; justify-content: center; align-items: center;
+        /* --- CONTEÚDO SCROLLÁVEL --- */
+        .content {
+            flex: 1;
             padding: 20px;
+            overflow-y: auto; /* Permite rolar se precisar */
         }
-        .modal-content {
-            background: white; padding: 30px; border-radius: 15px;
-            max-width: 500px; width: 100%; text-align: center;
-            position: relative; animation: slideUp 0.4s ease;
+
+        .welcome-text { margin-bottom: 25px; }
+        .welcome-text h2 { font-size: 1.5rem; line-height: 1.2; margin-bottom: 5px; }
+        .welcome-text p { color: #6b7280; font-size: 0.9rem; }
+
+        /* CARD DA CALCULADORA */
+        .calc-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
         }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #999; }
-        
-        .price-display { background: #f4f4f4; padding: 15px; border-radius: 10px; margin: 20px 0; }
-        .total-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #666; }
-        .total-value { font-size: 2.5rem; font-weight: 900; color: var(--secondary); }
-        
-        .bonus-list { text-align: left; margin-bottom: 25px; border: 1px dashed #ccc; padding: 15px; border-radius: 8px; }
-        .bonus-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95rem; }
-        .bonus-item.free { color: #27ae60; font-weight: 700; }
-        .strike { text-decoration: line-through; color: #e74c3c; margin-right: 5px; font-weight: 400; font-size: 0.85rem; }
 
-        .btn-action { 
-            display: block; width: 100%; background: var(--accent); color: white; 
-            padding: 15px; text-decoration: none; font-weight: 700; border-radius: 8px; 
-            font-size: 1.1rem; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-            animation: pulse 2s infinite;
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; color: #374151; }
+        
+        .custom-input {
+            width: 100%; padding: 16px;
+            background: #f9fafb; border: 2px solid #e5e7eb;
+            border-radius: 12px; font-size: 1rem; color: #111;
+            outline: none; transition: 0.3s;
+            appearance: none; /* Tira estilo padrão do browser */
         }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-        
-        .disclaimer { margin-top: 15px; font-size: 0.8rem; color: #777; }
+        .custom-input:focus { border-color: #f97316; background: #fff; }
 
-        /* --- GALERIA & INFO --- */
-        .features { padding: 60px 0; text-align: center; background: #fff; }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
-        .feature-item i { font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; }
-        .feature-item h3 { margin-bottom: 10px; }
-
-        footer { background: var(--secondary); color: #777; padding: 30px 0; text-align: center; font-size: 0.9rem; }
-
-        /* Responsivo */
-        @media(max-width: 600px) {
-            .hero h1 { font-size: 1.8rem; }
-            .total-value { font-size: 2rem; }
+        /* CHECKBOX CUSTOMIZADO */
+        .checkbox-container {
+            display: flex; align-items: center; gap: 12px;
+            background: #fff; padding: 15px; border-radius: 12px;
+            border: 2px solid #e5e7eb; cursor: pointer;
         }
+        .checkbox-container input { width: 20px; height: 20px; accent-color: #f97316; }
+        .checkbox-info { font-size: 0.9rem; font-weight: 600; }
+        .checkbox-sub { font-size: 0.75rem; color: #9ca3af; display: block; }
+
+        /* BOTÃO PRINCIPAL */
+        .btn-calc {
+            width: 100%;
+            background: #f97316; color: white;
+            padding: 18px; border: none; border-radius: 14px;
+            font-size: 1.1rem; font-weight: 700;
+            margin-top: 10px; cursor: pointer;
+            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
+            transition: transform 0.2s;
+        }
+        .btn-calc:active { transform: scale(0.98); }
+
+        /* --- RESULTADO (BOTTOM SHEET) --- */
+        .bottom-sheet {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: white;
+            border-top-left-radius: 30px; border-top-right-radius: 30px;
+            padding: 30px 25px 25px 25px;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100;
+        }
+        .bottom-sheet.active { transform: translateY(0); }
+        
+        /* Puxadorzinho do modal */
+        .sheet-handle {
+            width: 40px; height: 5px; background: #e5e7eb;
+            border-radius: 10px; margin: -10px auto 20px auto;
+        }
+
+        .result-header { text-align: center; margin-bottom: 20px; }
+        .result-label { font-size: 0.8rem; text-transform: uppercase; color: #9ca3af; letter-spacing: 1px; font-weight: 700; }
+        .result-value { font-size: 2.5rem; font-weight: 800; color: #111; margin: 5px 0; }
+        
+        .bonus-tag { 
+            background: #ecfdf5; color: #059669; padding: 4px 10px; 
+            border-radius: 6px; font-size: 0.8rem; font-weight: 700; 
+            display: inline-block; margin-bottom: 5px;
+        }
+        .bonus-list { margin: 20px 0; border-top: 1px dashed #e5e7eb; padding-top: 15px; }
+        .bonus-item { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px; color: #4b5563; }
+        
+        .btn-whatsapp {
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            width: 100%; background: #25D366; color: white;
+            padding: 16px; border-radius: 14px; text-decoration: none;
+            font-weight: 700; font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 90;
+            display: none; opacity: 0; transition: opacity 0.3s;
+        }
+        .overlay.active { display: block; opacity: 1; }
+
     </style>
 </head>
 <body>
 
     <header>
-        <div class="container flex">
-            <div class="logo">PISOS<span>PREMIUM</span></div>
-            <a href="#" class="btn-zap-header"><i class="fab fa-whatsapp"></i> (11) 99999-9999</a>
-        </div>
+        <i class="fas fa-bars menu-icon"></i>
+        <div class="app-logo">PISOS<span>PREMIUM</span></div>
+        <div class="notif-badge"><i class="far fa-bell menu-icon"></i></div>
     </header>
 
-    <section class="hero">
-        <div class="container hero-content">
-            <h1>Instalação Profissional em <br> <span style="color: var(--primary);">Jundiaí e Região</span></h1>
-            <p>Faça seu orçamento em 30 segundos e garanta condições exclusivas.</p>
-            
-            <div class="calculator-box">
-                <div class="form-group">
-                    <label>Qual a metragem aproximada? (m²)</label>
-                    <input type="number" id="metragem" placeholder="Ex: 45">
-                </div>
-                <div class="form-group">
-                    <label>Qual modelo você prefere?</label>
-                    <select id="modelo">
-                        <option value="120">Laminado Padrão (R$ 120/m²)</option>
+    <div class="content">
+        <div class="welcome-text">
+            <h2>Simulador de<br>Investimento</h2>
+            <p>Descubra o valor ideal para sua reforma em segundos.</p>
+        </div>
+
+        <div class="calc-card">
+            <div class="input-group">
+                <label>Área do ambiente (m²)</label>
+                <input type="number" id="metragem" class="custom-input" placeholder="0" inputmode="numeric">
+            </div>
+
+            <div class="input-group">
+                <label>Modelo desejado</label>
+                <div style="position: relative;">
+                    <select id="modelo" class="custom-input">
+                        <option value="120">Laminado Basic (R$ 120/m²)</option>
                         <option value="160">Vinílico Colado (R$ 160/m²)</option>
                         <option value="210">Vinílico Clicado (R$ 210/m²)</option>
-                        <option value="350">Madeira Maciça (R$ 350/m²)</option>
+                        <option value="350">Madeira Nobre (R$ 350/m²)</option>
                     </select>
+                    <i class="fas fa-chevron-down" style="position: absolute; right: 15px; top: 20px; color: #9ca3af; pointer-events: none;"></i>
                 </div>
-                <div class="form-group" style="display:flex; align-items:center; gap:10px;">
-                    <input type="checkbox" id="rodape" style="width:20px;">
-                    <label for="rodape" style="margin:0;">Incluir Rodapé (+ R$ 25/m linear)</label>
+            </div>
+
+            <label class="checkbox-container">
+                <input type="checkbox" id="rodape">
+                <div>
+                    <span class="checkbox-info">Adicionar Rodapés</span>
+                    <span class="checkbox-sub">Acabamento perfeito (+ R$ 25/m)</span>
                 </div>
-                <button class="btn-calc" onclick="calcular()">VER PREÇO ESTIMADO</button>
+            </label>
+
+            <button class="btn-calc" onclick="calcular()">CALCULAR AGORA</button>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px; opacity: 0.5; font-size: 0.8rem;">
+            <i class="fas fa-lock"></i> Dados seguros e criptografados
+        </div>
+    </div>
+
+    <div class="overlay" id="bgOverlay" onclick="fecharModal()"></div>
+    
+    <div class="bottom-sheet" id="sheetResult">
+        <div class="sheet-handle"></div>
+        
+        <div class="result-header">
+            <div class="result-label">Investimento Estimado</div>
+            <div class="result-value" id="valorFinal">R$ 0,00</div>
+            <div style="font-size: 0.85rem; color: #6b7280;">Em até 12x no cartão</div>
+        </div>
+
+        <div class="bonus-list">
+            <div class="bonus-item">
+                <span><i class="fas fa-check-circle" style="color: #059669; margin-right: 5px;"></i> Instalação Especializada</span>
+                <b>Incluso</b>
+            </div>
+            <div class="bonus-item">
+                <span><i class="fas fa-gift" style="color: #f97316; margin-right: 5px;"></i> Cola & Manta</span>
+                <span class="bonus-tag">GRÁTIS</span>
+            </div>
+            <div class="bonus-item">
+                <span><i class="fas fa-truck" style="color: #3b82f6; margin-right: 5px;"></i> Frete p/ Região</span>
+                <span class="bonus-tag">GRÁTIS</span>
             </div>
         </div>
-    </section>
 
-    <section class="features">
-        <div class="container">
-            <h2>Por que escolher a Pisos Premium?</h2>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <i class="fas fa-clock"></i>
-                    <h3>Instalação em 48h</h3>
-                    <p>Equipe rápida e limpa. Entregamos sua obra sem entulho.</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-medal"></i>
-                    <h3>Garantia de 1 Ano</h3>
-                    <p>Segurança total na instalação e nos materiais.</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <h3>Pagamento Facilitado</h3>
-                    <p>Parcelamos sua reforma em até 10x sem juros.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 Pisos Premium - Todos os direitos reservados.</p>
-        <p>Desenvolvido por Pixel Studio</p>
-    </footer>
-
-    <div class="modal-overlay" id="modalResult">
-        <div class="modal-content">
-            <span class="close-modal" onclick="fecharModal()">&times;</span>
-            
-            <h3>Orçamento Estimado</h3>
-            
-            <div class="price-display">
-                <div class="total-label">Investimento Aproximado</div>
-                <div class="total-value" id="valorFinal">R$ 0,00</div>
-            </div>
-
-            <div class="bonus-list">
-                <p style="margin-bottom:10px; font-weight:600;">O que está incluso hoje:</p>
-                <div class="bonus-item free">
-                    <span><i class="fas fa-check"></i> Cola Especial</span>
-                    <span><span class="strike">R$ 300</span> GRÁTIS</span>
-                </div>
-                <div class="bonus-item free">
-                    <span><i class="fas fa-check"></i> Manta Acústica</span>
-                    <span><span class="strike">R$ 150</span> GRÁTIS</span>
-                </div>
-                <div class="bonus-item">
-                    <span><i class="fas fa-check"></i> Mão de Obra Especializada</span>
-                    <span>Incluso</span>
-                </div>
-            </div>
-
-            <a href="#" id="linkZap" class="btn-action" target="_blank">
-                AGENDAR VISITA TÉCNICA <i class="fab fa-whatsapp"></i>
-            </a>
-            
-            <p class="disclaimer">
-                *Valor estimado. É necessária uma visita técnica gratuita para validar a metragem e o contrapiso.
-            </p>
+        <a href="#" id="linkZap" class="btn-whatsapp" target="_parent">
+            AGENDAR VISITA TÉCNICA
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        
+        <div style="text-align: center; margin-top: 15px;">
+            <span style="font-size: 0.8rem; color: #9ca3af; text-decoration: underline; cursor: pointer;" onclick="fecharModal()">Refazer cálculo</span>
         </div>
     </div>
 
@@ -218,20 +226,21 @@
         function calcular() {
             // Pegar valores
             const metragem = parseFloat(document.getElementById('metragem').value);
-            const modeloPreco = parseFloat(document.getElementById('modelo').value);
+            const modeloEl = document.getElementById('modelo');
+            const modeloPreco = parseFloat(modeloEl.value);
+            const modeloNome = modeloEl.options[modeloEl.selectedIndex].text;
             const temRodape = document.getElementById('rodape').checked;
             
-            // Validação simples
             if (isNaN(metragem) || metragem < 1) {
-                alert("Por favor, digite uma metragem válida.");
+                // Treme o input se estiver vazio (Feedback visual)
+                const input = document.getElementById('metragem');
+                input.style.border = "2px solid #ef4444";
+                setTimeout(() => input.style.border = "2px solid #e5e7eb", 500);
                 return;
             }
 
             // Cálculo
             let total = metragem * modeloPreco;
-            
-            // Lógica simples de rodapé (estimando que rodapé é ~ metragem * 0.8 ou um valor fixo pra simplificar)
-            // Aqui vou simplificar: se tem rodapé, adiciona 15% no valor total ou R$ 25 * metragem (assumindo perimetro ~ area em comodos pequenos)
             if (temRodape) {
                 total += (metragem * 25); 
             }
@@ -239,31 +248,25 @@
             // Formatar Dinheiro
             const valorFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-            // Atualizar Modal
+            // Atualizar UI
             document.getElementById('valorFinal').innerText = valorFormatado;
             
-            // Gerar Link do WhatsApp
-            const modeloNome = document.getElementById('modelo').options[document.getElementById('modelo').selectedIndex].text;
-            const textoZap = `Olá! Fiz um orçamento no site: ${metragem}m² de ${modeloNome}. Deu aprox. ${valorFormatado}. Gostaria de agendar a visita técnica para validar.`;
-            const numeroZap = "5511999999999"; // TROCAR PELO NÚMERO DO CLIENTE
+            // Gerar Link Zap
+            // NOTA: target="_parent" no link HTML é importante para sair do iframe se necessário, 
+            // mas geralmente queremos que abra o app do Whats.
+            const textoZap = `Olá! Simulei no app: ${metragem}m² de ${modeloNome.split('(')[0]}. Deu aprox. ${valorFormatado}. Quero agendar visita.`;
+            const numeroZap = "5511999999999"; 
             const link = `https://wa.me/${numeroZap}?text=${encodeURIComponent(textoZap)}`;
-            
             document.getElementById('linkZap').href = link;
 
-            // Abrir Modal
-            document.getElementById('modalResult').style.display = 'flex';
+            // Abrir Sheet e Overlay
+            document.getElementById('sheetResult').classList.add('active');
+            document.getElementById('bgOverlay').classList.add('active');
         }
 
         function fecharModal() {
-            document.getElementById('modalResult').style.display = 'none';
-        }
-
-        // Fechar se clicar fora
-        window.onclick = function(event) {
-            const modal = document.getElementById('modalResult');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
+            document.getElementById('sheetResult').classList.remove('active');
+            document.getElementById('bgOverlay').classList.remove('active');
         }
     </script>
 </body>
